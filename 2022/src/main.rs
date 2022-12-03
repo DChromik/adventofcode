@@ -1,9 +1,9 @@
-use crate::day1::compute_day_1;
+use crate::days::day1::part1::compute_part_1;
 
-mod day1;
-mod day1test;
+mod days;
 
 fn main() {
-    let result = compute_day_1("src/input.txt");
-    println!("{}", result);
+    let result = compute_part_1("src/days/day1/input.txt");
+    let top_calories = result[0] + result[1] + result[2];
+    println!("{}", top_calories);
 }
