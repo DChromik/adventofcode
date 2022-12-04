@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::days::day2::day2::{resolve_part_1, resolve_part_2};
+    use crate::days::day2::{resolve_part_1, resolve_part_2};
 
 
     #[test]

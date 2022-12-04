@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::days::day1::part1::compute_part_1;
+    use crate::days::day1::compute_part_1;
 
     #[test]
     fn should_compute_part_1() {
