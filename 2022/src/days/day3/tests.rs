@@ -16,6 +16,6 @@ mod tests {
     fn should_compute_part_2() {
         let path = Path::new("./src/days/day3/input_small.txt");
         let result = day3::resolve_part_2(path);
-        assert_eq!(result, 12);
+        assert_eq!(result, 70);
     }
 }
