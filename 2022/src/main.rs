@@ -18,4 +18,6 @@ fn main() {
     println!("Day3");
     let result = day3::resolve_part_1(Path::new("src/days/day3/input.txt"));
     println!("  - part 1: {}", result);
+    let result = day3::resolve_part_2(Path::new("src/days/day3/input.txt"));
+    println!("  - part 2: {}", result);
 }

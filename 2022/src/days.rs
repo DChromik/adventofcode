@@ -18,4 +18,5 @@ pub mod day3 {
     mod tests;
 
     pub use solution::resolve_part_1;
+    pub use solution::resolve_part_2;
 }
