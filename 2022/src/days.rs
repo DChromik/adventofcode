@@ -20,3 +20,19 @@ pub mod day3 {
     pub use solution::resolve_part_1;
     pub use solution::resolve_part_2;
 }
+
+pub mod day4 {
+    mod solution;
+    mod tests;
+    
+    pub use solution::resolve_part_1;
+    pub use solution::resolve_part_2;
+}
+
+pub mod day5 {
+    mod solution;
+    mod tests;
+    
+    pub use solution::resolve_part_1;
+    pub use solution::resolve_part_2;
+}
