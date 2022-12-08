@@ -1,5 +1,5 @@
-use std::path::Path;
-use crate::days::{day1, day2, day3, day4};
+use std::{path::Path, fs::read_to_string, ops::Add};
+use crate::days::{day1, day2, day3, day4, day6};
 
 mod days;
 
@@ -25,5 +25,13 @@ fn main() {
     let result = day4::resolve_part_1(Path::new("src/days/day4/input.txt"));
     println!("  - part 1: {}", result);
     let result = day4::resolve_part_2(Path::new("src/days/day4/input.txt"));
+    println!("  - part 2: {}", result);
+
+    println!("Day 6");
+    let path = Path::new("src/days/day6/input.txt");
+    let string = read_to_string(path).unwrap();
+    let result = day6::resolve_part_1(&string);
+    println!("  - part 1: {}", result);
+    let result = day6::resolve_part_2(&string);
     println!("  - part 2: {}", result);
 }

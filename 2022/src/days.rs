@@ -36,3 +36,11 @@ pub mod day5 {
     pub use solution::resolve_part_1;
     pub use solution::resolve_part_2;
 }
+
+pub mod day6 {
+    mod solution;
+    mod tests;
+    
+    pub use solution::resolve_part_1;
+    pub use solution::resolve_part_2;
+}
