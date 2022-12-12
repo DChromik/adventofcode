@@ -1,14 +1,17 @@
-use std::{path::Path, collections::VecDeque};
+use std::{path::Path, collections::VecDeque, slice::Iter};
 
-pub fn resolve_part_1(string: &str) -> &str {
-    let stacks = initialize_stacks(string);
-    for stack in stacks {
-        for item in stack.iter() {
-            println!("{}", *item as char);
+pub fn resolve_part_1(string: &str) -> String {
+    let mut stacks = initialize_stacks(string);
+    for instructions in get_instructions(string) {
+        let (amount, from, to) = parse_instructions(instructions);
+        for _index in 0..amount {
+            if !stacks[from].is_empty() {
+                let item = stacks[from].pop_back().unwrap();
+                stacks[to].push_back(item)
+            }
         }
-        println!("");
     }
-    return "";
+    return get_first_items(stacks.iter());
 }
 
 pub fn resolve_part_2(_path: &Path) -> u64 {
@@ -35,4 +38,26 @@ fn initialize_stacks(string: &str) -> Vec<VecDeque<u8>> {
 fn get_stack_count(string: &str) -> usize {
     let line_length = string.lines().nth(0).unwrap().len();
     return (line_length + 1) / 4;
+}
+
+fn get_instructions(string: &str) -> Vec<Vec<&str>> {
+    return string.lines()
+        .filter(|line| line.starts_with("move"))
+        .map(|line| line.split(' ').collect::<Vec<&str>>())
+        .collect();
+}
+
+fn parse_instructions(instructions: Vec<&str>) -> (usize, usize, usize) {
+    return (
+        instructions[1].parse::<usize>().unwrap(),
+        instructions[3].parse::<usize>().unwrap() - 1,
+        instructions[5].parse::<usize>().unwrap() - 1,
+    )
+}
+
+fn get_first_items(stacks: Iter<VecDeque<u8>>) -> String {
+    let vec = stacks
+        .map(|stack| *stack.back().unwrap_or(&b' ') as char)
+        .collect();
+    return vec;
 }
