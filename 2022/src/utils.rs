@@ -1,3 +1,3 @@
-pub use self::file::read_input_file;
+pub use self::file::*;
 
 mod file;
