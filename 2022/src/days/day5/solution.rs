@@ -1,4 +1,4 @@
-use std::{path::Path, collections::VecDeque, slice::Iter};
+use std::slice::Iter;
 
 pub fn resolve_part_1(string: &str) -> String {
     let mut stacks = initialize_stacks(string);
@@ -6,21 +6,35 @@ pub fn resolve_part_1(string: &str) -> String {
         let (amount, from, to) = parse_instructions(instructions);
         for _index in 0..amount {
             if !stacks[from].is_empty() {
-                let item = stacks[from].pop_back().unwrap();
-                stacks[to].push_back(item)
+                let item = stacks[from].pop().unwrap();
+                stacks[to].push(item)
             }
         }
     }
     return get_first_items(stacks.iter());
 }
 
-pub fn resolve_part_2(_path: &Path) -> u64 {
-    return 0;
+pub fn resolve_part_2(string: &str) -> String {
+    let mut stacks = initialize_stacks(string);
+    for instructions in get_instructions(string) {
+        let (amount, from, to) = parse_instructions(instructions);
+        let mut lifted_items = Vec::new();
+        for _index in 0..amount {
+            if !stacks[from].is_empty() {
+                let item = stacks[from].pop().unwrap();
+                lifted_items.push(item);
+            }
+        }
+        for item in lifted_items.iter().rev() {
+            stacks[to].push(*item)
+        }
+    }
+    return get_first_items(stacks.iter());
 }
 
-fn initialize_stacks(string: &str) -> Vec<VecDeque<u8>> {
+fn initialize_stacks(string: &str) -> Vec<Vec<u8>> {
     let stack_count = get_stack_count(string);
-    let mut stacks = vec![VecDeque::new(); stack_count];
+    let mut stacks = vec![Vec::new(); stack_count];
     let stack_lines = string.lines()
         .filter(|line| line.contains('['))
         .rev();
@@ -28,7 +42,7 @@ fn initialize_stacks(string: &str) -> Vec<VecDeque<u8>> {
         for (index, line_index) in (1..line.len()).step_by(4).enumerate() {
             let item = line.as_bytes()[line_index];
             if item != b' ' {
-                stacks[index].push_back(line.as_bytes()[line_index])
+                stacks[index].push(line.as_bytes()[line_index])
             }
         }
     }
@@ -55,9 +69,9 @@ fn parse_instructions(instructions: Vec<&str>) -> (usize, usize, usize) {
     )
 }
 
-fn get_first_items(stacks: Iter<VecDeque<u8>>) -> String {
+fn get_first_items(stacks: Iter<Vec<u8>>) -> String {
     let vec = stacks
-        .map(|stack| *stack.back().unwrap_or(&b' ') as char)
+        .map(|stack| *stack.last().unwrap_or(&b' ') as char)
         .collect();
     return vec;
 }

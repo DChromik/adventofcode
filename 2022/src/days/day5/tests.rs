@@ -12,10 +12,11 @@ mod tests {
         assert_eq!(result, "CMZ");
     }
 
-    // #[test]
-    // fn should_compute_part_2() {
-    //     let path = Path::new("./src/days/day3/input_small.txt");
-    //     let result = day4::resolve_part_2(path);
-    //     assert_eq!(result, 70);
-    // }
+    #[test]
+    fn should_compute_part_2() {
+        let path = Path::new("./src/days/day5/input_small.txt");
+        let string = read_to_string(path).unwrap();
+        let result = day5::resolve_part_2(&string);
+        assert_eq!(result, "MCD");
+    }
 }

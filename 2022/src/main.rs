@@ -32,8 +32,8 @@ fn main() {
     let string = read_to_string(path).unwrap();
     let result = day5::resolve_part_1(&string);
     println!("  - part 1: {}", result);
-    // let result = day4::resolve_part_2(Path::new("src/days/day4/input.txt"));
-    // println!("  - part 2: {}", result);
+    let result = day5::resolve_part_2(&string);
+    println!("  - part 2: {}", result);
 
     println!("Day 6");
     let path = Path::new("src/days/day6/input.txt");
