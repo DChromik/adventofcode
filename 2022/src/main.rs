@@ -1,5 +1,5 @@
 use std::{path::Path};
-use crate::{days::{day1, day2, day3, day4, day6, day5}, utils::read_input_file};
+use crate::{days::{day1, day2, day3, day4, SOLUTIONS}, utils::read_input_file};
 
 mod days;
 mod utils;
@@ -28,17 +28,17 @@ fn main() {
     let result = day4::resolve_part_2(Path::new("src/days/day4/input.txt"));
     println!("  - part 2: {}", result);
 
-    println!("Day 5");
-    let string = read_input_file(5);
-    let result = day5::resolve_part_1(&string);
-    println!("  - part 1: {}", result);
-    let result = day5::resolve_part_2(&string);
-    println!("  - part 2: {}", result);
+    resolve_day(5);
+    resolve_day(6);
+}
 
-    println!("Day 6");
-    let string = read_input_file(6);
-    let result = day6::resolve_part_1(&string);
+fn resolve_day(day: usize) {
+    println!("Day {}", day);
+    let string = read_input_file(day);
+
+    let result = SOLUTIONS[day - 5].0(&string);
     println!("  - part 1: {}", result);
-    let result = day6::resolve_part_2(&string);
+
+    let result = SOLUTIONS[day - 5].1(&string);
     println!("  - part 2: {}", result);
 }
