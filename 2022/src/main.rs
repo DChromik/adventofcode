@@ -30,6 +30,7 @@ fn main() {
 
     resolve_day(5);
     resolve_day(6);
+    resolve_day(7);
 }
 
 fn resolve_day(day: usize) {

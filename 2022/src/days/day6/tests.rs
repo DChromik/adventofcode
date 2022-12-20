@@ -17,7 +17,7 @@ mod tests {
     fn should_compute_part_1() {
         for (index, string) in STRINGS.iter().enumerate() {
             let result = day6::resolve_part_1(string);
-            assert_eq!(result, RESULTS_1[index], "Testing string {}", index + 1);
+            assert_eq!(result, RESULTS_1[index].to_string(), "Testing string {}", index + 1);
         }
     }
 
@@ -25,7 +25,7 @@ mod tests {
     fn should_compute_part_2() {
         for (index, string) in STRINGS.iter().enumerate() {
             let result = day6::resolve_part_2(string);
-            assert_eq!(result, RESULTS_2[index], "Testing string {}", index + 1);
+            assert_eq!(result, RESULTS_2[index].to_string(), "Testing string {}", index + 1);
         }
     }
 }
