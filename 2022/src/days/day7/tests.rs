@@ -13,6 +13,6 @@ mod tests {
     fn should_compute_part_2() {
         let string = &read_test_input_file(7);
         let result = resolve_part_2(string);
-        assert_eq!(result, "95437");
+        assert_eq!(result, "24933642");
     }
 }
