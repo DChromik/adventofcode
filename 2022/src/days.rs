@@ -2,7 +2,8 @@ pub mod day1 {
     mod solution;
     mod tests;
     
-    pub use solution::compute_part_1;
+    pub use solution::resolve_part_1;
+    pub use solution::resolve_part_2;
 }
 
 pub mod day2 {
@@ -62,7 +63,8 @@ pub mod day8 {
 }
 
 type ResolveFunction = fn (string: &str) -> String;
-pub const SOLUTIONS: [(ResolveFunction, ResolveFunction); 7] = [
+pub const SOLUTIONS: [(ResolveFunction, ResolveFunction); 8] = [
+    (day1::resolve_part_1, day1::resolve_part_2),
     (day2::resolve_part_1, day2::resolve_part_2),
     (day3::resolve_part_1, day3::resolve_part_2),
     (day4::resolve_part_1, day4::resolve_part_2),

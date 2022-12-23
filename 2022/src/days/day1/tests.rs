@@ -1,16 +1,18 @@
 #[cfg(test)]
 mod tests {
-    use crate::days::day1::compute_part_1;
+    use crate::{days::day1::*, utils::read_test_input_file};
 
     #[test]
     fn should_compute_part_1() {
-        let result = compute_part_1("src/days/day1/input_small.txt");
-        assert_eq!(result[0], 24000);
+        let string = &read_test_input_file(1);
+        let result = resolve_part_1(string);
+        assert_eq!(result, "24000");
     }
 
     #[test]
     fn should_compute_part_2() {
-        let result = compute_part_1("src/days/day1/input_small.txt");
-        assert_eq!(result[0..3], [24000, 11000, 10000]);
+        let string = &read_test_input_file(1);
+        let result = resolve_part_2(string);
+        assert_eq!(result, "45000");
     }
 }

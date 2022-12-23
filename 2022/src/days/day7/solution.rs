@@ -83,10 +83,6 @@ enum Type {
     File,
 }
 
-fn is_command(line: &str) -> bool {
-    line.as_bytes()[0] == b'$'
-}
-
 type ParsedLine = (Type, String);
 fn parse_line(line: &str) -> ParsedLine {
     let split_line = line.split(' ').collect::<Vec<_>>();
