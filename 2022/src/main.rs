@@ -21,13 +21,8 @@ fn main() {
     // println!("  - part 1: {}", result);
     // let result = day3::resolve_part_2(Path::new("src/days/day3/input.txt"));
     // println!("  - part 2: {}", result);
-    //
-    // println!("Day 4");
-    // let result = day4::resolve_part_1(Path::new("src/days/day4/input.txt"));
-    // println!("  - part 1: {}", result);
-    // let result = day4::resolve_part_2(Path::new("src/days/day4/input.txt"));
-    // println!("  - part 2: {}", result);
 
+    resolve_day(4);
     resolve_day(5);
     resolve_day(6);
     resolve_day(7);

@@ -1,21 +1,19 @@
 #[cfg(test)]
 mod tests {
-    use std::path::Path;
-
-    use crate::days::day4;
+    use crate::{days::day4::*, utils::read_test_input_file};
 
 
     #[test]
     fn should_compute_part_1() {
-        let path = Path::new("./src/days/day4/input_small.txt");
-        let result = day4::resolve_part_1(path);
-        assert_eq!(result, 2);
+        let string = &read_test_input_file(4);
+        let result = resolve_part_1(string);
+        assert_eq!(result, "2");
     }
 
     #[test]
     fn should_compute_part_2() {
-        let path = Path::new("./src/days/day4/input_small.txt");
-        let result = day4::resolve_part_2(path);
-        assert_eq!(result, 4);
+        let string = &read_test_input_file(4);
+        let result = resolve_part_2(string);
+        assert_eq!(result, "4");
     }
 }

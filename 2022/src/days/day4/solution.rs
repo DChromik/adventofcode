@@ -1,23 +1,23 @@
-use std::{path::Path, fs::read_to_string, collections::HashSet};
+use std::collections::HashSet;
 
-pub fn resolve_part_1(path: &Path) -> u64 {
-    let file = read_to_string(path).unwrap();
-    return file.lines()
+pub fn resolve_part_1(string: &str) -> String {
+    return string.lines()
         .map(line_to_ranges)
         .map(ranges_to_sets)
         .map(are_overlapped)
         .map(to_number)
-        .sum();
+        .sum::<u64>()
+        .to_string();
 }
 
-pub fn resolve_part_2(path: &Path) -> u64 {
-    let file = read_to_string(path).unwrap();
-    return file.lines()
+pub fn resolve_part_2(string: &str) -> String {
+    return string.lines()
         .map(line_to_ranges)
         .map(ranges_to_sets)
         .map(are_not_overlapped)
         .map(to_number)
-        .sum();
+        .sum::<u64>()
+        .to_string();
 }
 
 type Ranges = ((u64, u64), (u64, u64));
