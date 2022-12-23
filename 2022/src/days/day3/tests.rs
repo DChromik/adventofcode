@@ -2,20 +2,20 @@
 mod tests {
     use std::path::Path;
 
-    use crate::days::day3;
+    use crate::{days::day3, utils::read_test_input_file};
 
 
     #[test]
     fn should_compute_part_1() {
-        let path = Path::new("./src/days/day3/input_small.txt");
-        let result = day3::resolve_part_1(path);
-        assert_eq!(result, 157);
+        let string = &read_test_input_file(3);
+        let result = day3::resolve_part_1(string);
+        assert_eq!(result, "157");
     }
 
     #[test]
     fn should_compute_part_2() {
-        let path = Path::new("./src/days/day3/input_small.txt");
-        let result = day3::resolve_part_2(path);
-        assert_eq!(result, 70);
+        let string = &read_test_input_file(3);
+        let result = day3::resolve_part_2(string);
+        assert_eq!(result, "70");
     }
 }

@@ -1,23 +1,19 @@
-use std::{path::Path, fs::read_to_string};
-
-pub fn resolve_part_1(path: &Path) -> u64 {
-    let file = read_to_string(path).unwrap();
-    let summed_priorities = file.lines()
+pub fn resolve_part_1(string: &str) -> String {
+    let summed_priorities = string.lines()
         .map(split_in_half)
         .map(find_common_item_in_pack)
         .map(item_to_priority)
         .sum::<u64>();
-    return summed_priorities;
+    return summed_priorities.to_string();
 }
 
-pub fn resolve_part_2(path: &Path) -> u64 {
-    let file = read_to_string(path).unwrap();
-    let summed_priorities = to_grouped_lines(&file)
+pub fn resolve_part_2(string: &str) -> String {
+    let summed_priorities = to_grouped_lines(string)
         .iter()
         .map(find_common_item_in_group)
         .map(item_to_priority)
         .sum::<u64>();
-    return summed_priorities;
+    return summed_priorities.to_string();
 }
 
 fn split_in_half(line: &str) -> (&str, &str) {
@@ -48,7 +44,7 @@ fn item_to_priority(item: u8) -> u64 {
     return (item - b'A' + 27) as u64;
 }
 
-fn to_grouped_lines(string: &String) -> Vec<(&str, &str, &str)> {
+fn to_grouped_lines(string: &str) -> Vec<(&str, &str, &str)> {
     let lines = string.lines();
     let mut i = 0;
     let mut groups = Vec::new();

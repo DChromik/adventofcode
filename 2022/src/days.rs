@@ -62,7 +62,8 @@ pub mod day8 {
 }
 
 type ResolveFunction = fn (string: &str) -> String;
-pub const SOLUTIONS: [(ResolveFunction, ResolveFunction); 5] = [
+pub const SOLUTIONS: [(ResolveFunction, ResolveFunction); 6] = [
+    (day3::resolve_part_1, day3::resolve_part_2),
     (day4::resolve_part_1, day4::resolve_part_2),
     (day5::resolve_part_1, day5::resolve_part_2),
     (day6::resolve_part_1, day6::resolve_part_2),
