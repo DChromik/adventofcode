@@ -1,5 +1,3 @@
-use std::fs::read_to_string;
-
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Shape {
     Rock = 1,
@@ -7,24 +5,22 @@ enum Shape {
     Scissors = 3,
 }
 
-pub fn resolve_part_1(path: &str) -> u64 {
-    let file = read_to_string(path).unwrap();
-    let result = file.lines()
+pub fn resolve_part_1(string: &str) -> String {
+    let result = string.lines()
         .map(|line| line.as_bytes())
         .map(|line| line_to_shapes(line))
         .map(|line| get_line_score(&line))
         .sum::<u64>();
-    return result;
+    return result.to_string();
 }
 
-pub fn resolve_part_2(path: &str) -> u64 {
-    let file = read_to_string(path).unwrap();
-    let result = file.lines()
+pub fn resolve_part_2(string: &str) -> String {
+    let result = string.lines()
         .map(|line| line.as_bytes())
         .map(|line| line_to_shapes_2(line))
         .map(|line| get_line_score(&line))
         .sum::<u64>();
-    return result;
+    return result.to_string();
 }
 
 fn line_to_shapes(line: &[u8]) -> [Shape; 2] {
