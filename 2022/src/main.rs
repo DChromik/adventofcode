@@ -1,4 +1,4 @@
-use crate::{days::{SOLUTIONS}, utils::read_input_file};
+use crate::{days::SOLUTIONS, utils::read_input_file};
 
 mod days;
 mod utils;
