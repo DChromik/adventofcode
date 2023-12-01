@@ -1,9 +1,13 @@
 {
   "name": "aoc-2023",
   "module": "index.ts",
-  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

@@ -1,4 +1,3 @@
-import { describe, it, expect } from "bun:test";
 import { createReadStream } from 'fs';
 import { resolvePart1 } from "./solution";
 
