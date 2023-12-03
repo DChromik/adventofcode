@@ -15,8 +15,10 @@ class Number {
 }
 
 class Symbol {
-	constructor() {
+	public readonly isGear: boolean;
 
+	constructor(isGear: boolean) {
+		this.isGear = isGear;
 	}
 }
 
@@ -42,7 +44,7 @@ class Grid {
 				return previousCell;
 			}
 			previousCell = null;
-			return new Symbol();
+			return new Symbol(character === '*');
 		})
 		this.rows.push(row);
 	}
@@ -76,6 +78,34 @@ class Grid {
 		}
 		return false;
 	}
+
+	public addGearValues(): number {
+		return this.rows.reduce((sum, row, rowIndex) => {
+			return row.reduce((rowSum: number, cell, colIndex) => {
+				if (cell instanceof Symbol && cell.isGear) {
+					const neighbours = this.getUniqueNeighbours(rowIndex, colIndex);
+					if (neighbours.length === 2) {
+						return rowSum + neighbours[0].value * neighbours[1].value;
+					}
+				}
+				return rowSum;
+			}, sum);
+		}, 0)
+
+	}
+
+	private getUniqueNeighbours(row: number, column: number): Number[] {
+		const neighbours = new Set<Number>();
+		for (let x = column - 1; x <= column + 1; x += 1) {
+			for (let y = row - 1; y <= row + 1; y += 1) {
+				const cell = this.rows[y][x];
+				if (cell instanceof Number && !neighbours.has(cell)) {
+					neighbours.add(cell)
+				}
+			}
+		}
+		return Array.from(neighbours);
+	}
 }
 
 export async function resolvePart1(stream: ReadStream): Promise<number> {
@@ -86,9 +116,11 @@ export async function resolvePart1(stream: ReadStream): Promise<number> {
 	return grid.addAdjacentNumbers();
 }
 
-export function resolvePart2(stream: ReadStream): Promise<number> {
-	return reduceLines(stream, (sum, line) => {
-		return sum;
-	}, 0);
+export async function resolvePart2(stream: ReadStream): Promise<number> {
+	const grid = await reduceLines(stream, (grid, line) => {
+		grid.addLine(line);
+		return grid;
+	}, new Grid());
+	return grid.addGearValues();
 }
 
