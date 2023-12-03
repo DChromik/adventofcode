@@ -26,7 +26,12 @@ export function resolvePart1(stream: ReadStream): Promise<number> {
 }
 
 export function resolvePart2(stream: ReadStream): Promise<number> {
-	return Promise.resolve(0);
+	return reduceLines(stream, (sum, line) => {
+		const game = parseLine(line);
+		const minimunRequiredCubes = getMinimumRequiredCubes(game);
+
+		return sum + calculatePower(minimunRequiredCubes);
+	}, 0);
 }
 
 function parseLine(line: string): Game {
@@ -45,4 +50,17 @@ function isGamePossible(game: Game): boolean {
 	return game.every((round) => {
 		return round.red <= cubesInBag.red && round.blue <= cubesInBag.blue && round.green <= cubesInBag.green;
 	});
+}
+
+function getMinimumRequiredCubes(game: Game): Cubes {
+	return game.reduce((acc, round) => {
+		acc.red = Math.max(acc.red, round.red);
+		acc.green = Math.max(acc.green, round.green);
+		acc.blue = Math.max(acc.blue, round.blue);
+		return acc;
+	}, { red: 0, green: 0, blue: 0 } as Cubes);
+}
+
+function calculatePower(cubes: Cubes): number {
+	return cubes.red * cubes.green * cubes.blue;
 }
