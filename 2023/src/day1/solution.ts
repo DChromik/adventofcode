@@ -1,5 +1,5 @@
-import { ReadStream } from "fs";
-import { createInterface } from "readline";
+import { ReadStream } from 'fs';
+import { reduceLines } from '../util';
 
 export async function resolvePart1(stream: ReadStream): Promise<number> {
 	return reduceLines(stream, (sum, line) => {
@@ -11,17 +11,6 @@ export async function resolvePart2(stream: ReadStream): Promise<number> {
 	return reduceLines(stream, (sum, line) => {
 		return sum + handleLine2(line);
 	}, 0);
-}
-
-async function reduceLines<T>(stream: ReadStream, handleLine: (accumulator: T, line: string) => T, initialValue: T): Promise<T> {
-	return new Promise((resolve) => {
-		let result = initialValue;
-		const rl = createInterface({
-			input: stream,
-		});
-		rl.on('line', (line) => { result = handleLine(result, line); });
-		rl.on('close', () => resolve(result));
-	});
 }
 
 function handleLine(line: string): number {

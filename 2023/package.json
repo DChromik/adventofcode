@@ -2,7 +2,7 @@
   "name": "aoc-2023",
   "main": "src/index.ts",
   "scripts": {
-    "resovle": "ts-node src/index.ts",
+    "resolve": "ts-node src/index.ts",
     "test": "jest"
   },
   "devDependencies": {
