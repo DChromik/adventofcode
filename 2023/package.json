@@ -1,8 +1,8 @@
 {
   "name": "aoc-2023",
-  "module": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "resovle": "ts-node src/index.ts",
     "test": "jest"
   },
   "devDependencies": {
