@@ -17,16 +17,24 @@ export async function resolvePart1(stream: ReadStream): Promise<number> {
 }
 
 export async function resolvePart2(stream: ReadStream): Promise<number> {
-	const { ranges, mapper } = await reduceLines(stream, (config, line, index) => {
+	const mapper = await reduceLines(stream, (mapper, line, index) => {
 		if (index === 0) {
-			config.ranges = mapSeedRanges(line);
+			return { ...mapper, seeds: mapSeedRanges(line) };
 		} else {
-			config.mapper.addMapping(line);
+			mapper.mapper.addMapping(line);
 		}
-		return config;
-	}, { ranges: [] as Range[], mapper: new SeedMapper() });
-	const locationRanges = mapper.mapRanges(ranges);
-	console.log(locationRanges);
+		return mapper;
+	}, { seeds: [] as Range[], mapper: new SeedMapper() });
+	for (let location = 0; location < Infinity; location += 1) {
+		const seed = mapper.mapper.getSeed(location);
+		const isSeed = mapper.seeds.some((seedRange) => {
+			return seedRange.from <= seed && seed <= seedRange.to;
+		});
+		if (isSeed) {
+			return location;
+		}
+
+	}
 	return 0;
 }
 
@@ -66,13 +74,10 @@ class SeedMapper {
 		});
 	}
 
-	public mapRanges(seedRanges: Range[]): Range[] {
-		return this.mappings.reduce((ranges, mapping) => {
-			console.log(ranges);
-			const result = mapping.flatMap((m) => mapRange(m, ranges))
-			console.log(result);
-			return result;
-		}, seedRanges);
+	public getSeed(location: number): number {
+		return this.mappings.reduceRight((value, mapping) => {
+			return reverseMapValue(mapping, value);
+		}, location)
 	}
 }
 
@@ -92,27 +97,15 @@ class Mapping {
 		return value <= this.to && value >= this.from;
 	}
 
-	public canMapRange(range: Range): boolean {
-		return range.from <= this.to && range.to >= this.from;
+	public canReverseMap(value: number): boolean {
+		return this.canMap(this.reverseMapValue(value));
 	}
-
 	public mapValue(source: number): number {
 		return source + this.amountChanged;
 	}
 
-	public mapRange(range: Range): Range[] {
-		const mappedRanges = [];
-		if (range.from < this.from) {
-			mappedRanges.push(new Range(range.from, this.from - range.from));
-		}
-
-		const from = range.from < this.from - 1 ? this.from : range.from;
-		const to = this.to + 1 < range.to ? this.to : range.to;
-		mappedRanges.push(new Range(from + this.amountChanged, to - from + 1));
-		if (range.to > this.to) {
-			mappedRanges.push(new Range(this.to + 1, range.to - this.to));
-		}
-		return mappedRanges;
+	public reverseMapValue(source: number): number {
+		return source - this.amountChanged;
 	}
 }
 
@@ -131,11 +124,8 @@ function mapValue(mappings: Mapping[], value: number): number {
 	return mapping ? mapping.mapValue(value) : value;
 }
 
-function mapRange(mapping: Mapping, ranges: Range[]): Range[] {
-	return ranges.reduce((mappedRanges, range) => {
-		if (mapping.canMapRange(range)) {
-			return [...mappedRanges, ...mapping.mapRange(range)];
-		}
-		return [...mappedRanges, range];
-	}, [] as Range[]);
+function reverseMapValue(mappings: Mapping[], value: number): number {
+	const mapping = mappings.find((m) => m.canReverseMap(value));
+	return mapping ? mapping.reverseMapValue(value) : value;
 }
+
