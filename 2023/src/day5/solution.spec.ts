@@ -9,9 +9,9 @@ describe('day5', () => {
 		expect(output).toEqual(35);
 	});
 
-	it.skip('should resolve part2', async () => {
+	it('should resolve part2', async () => {
 		const file = createReadStream(path.resolve(__dirname, './inputSmall1.txt'));
 		const output = await resolvePart2(file);
-		expect(output).toEqual(30);
+		expect(output).toEqual(46);
 	});
 });
