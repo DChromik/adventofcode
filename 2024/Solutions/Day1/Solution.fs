@@ -1,3 +1,7 @@
 module Day1
 
-let resolvePart1 filePath = printfn filePath
+open System.IO
+
+let resolvePart1 filePath =
+    for line in File.ReadLines filePath do
+        printfn "%s" line
