@@ -9,8 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Day1/Day1.fs" />
-    <Compile Include="UnitTest1.fs" />
+    <Compile Include="Day1.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,5 +23,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Solutions\Solutions.fsproj" />
   </ItemGroup>
-
 </Project>

@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Solutions", "Solutions\Solutions.fsproj", "{A4FEEC33-0979-42C6-9B25-62AAF3C23804}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Solutions.Tests", "Solutions.Tests\Solutions.Tests.fsproj", "{614CEEBA-E191-4757-87AC-6A62673D2CA7}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "App", "App\App.fsproj", "{99326212-0072-43AE-961D-F48F0C2E702A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{A4FEEC33-0979-42C6-9B25-62AAF3C23804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4FEEC33-0979-42C6-9B25-62AAF3C23804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4FEEC33-0979-42C6-9B25-62AAF3C23804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614CEEBA-E191-4757-87AC-6A62673D2CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614CEEBA-E191-4757-87AC-6A62673D2CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614CEEBA-E191-4757-87AC-6A62673D2CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614CEEBA-E191-4757-87AC-6A62673D2CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99326212-0072-43AE-961D-F48F0C2E702A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99326212-0072-43AE-961D-F48F0C2E702A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99326212-0072-43AE-961D-F48F0C2E702A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99326212-0072-43AE-961D-F48F0C2E702A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
