@@ -6,9 +6,12 @@ open System.IO
 let main _args =
     printfn "Main started"
 
-    let lines = File.ReadLines "./day1.txt"
+    let part1 = File.ReadLines "./day1.txt" |> Day1.resolvePart1
 
-    for line in lines do
-        printfn "%s" line
+    printfn "%d" part1
+
+    let part2 = File.ReadLines "./day1.txt" |> Day1.resolvePart2
+
+    printfn "%d" part2
 
     0
