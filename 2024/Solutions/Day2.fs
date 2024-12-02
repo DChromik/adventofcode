@@ -1,19 +1,19 @@
 module Day2
 
-let parseLine (line: string) = line.Split([| ' ' |]) |> Array.map int
+let parseLine (line: string) : int[] = line.Split(' ') |> Array.map int
 
-let areOrdered (levels: seq<int * int>) =
-    Seq.forall (fun (a, b) -> a > b) levels
-    || Seq.forall (fun (a, b) -> a < b) levels
+let areOrdered (pairs: seq<int * int>) : bool =
+    Seq.forall (fun (a, b) -> a > b) pairs || Seq.forall (fun (a, b) -> a < b) pairs
 
-let isReportSafe (levels: seq<int>) =
+let isWithinThreshold (pairs: seq<int * int>) (threshold: int) : bool =
+    Seq.forall (fun (a, b) -> abs (a - b) <= threshold) pairs
+
+let isReportSafe (levels: seq<int>) : bool =
     let pairedLevels = Seq.pairwise levels
 
-    areOrdered pairedLevels
-    && Seq.forall (fun (a, b) -> abs (a - b) <= 3) pairedLevels
+    areOrdered pairedLevels && isWithinThreshold pairedLevels 3
 
 let resolvePart1 (lines: seq<string>) =
-    Seq.map parseLine lines
-    |> Seq.fold (fun acc current -> acc + if isReportSafe current then 1 else 0) 0
+    lines |> Seq.map parseLine |> Seq.filter isReportSafe |> Seq.length
 
 let resolvePart2 (lines: seq<string>) = 0
