@@ -18,4 +18,8 @@ let main _args =
 
     printfn "%d" d1p1
 
+    let d1p2 = File.ReadLines "./day2.txt" |> Day2.resolvePart2
+
+    printfn "%d" d1p2
+
     0

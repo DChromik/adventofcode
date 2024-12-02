@@ -12,14 +12,14 @@ let input =
 
 [<Test>]
 let Test1 () =
-    let arr = input.Split [| '\n' |]
+    let arr = input.Split('\n')
 
     let result = Day2.resolvePart1 arr
     Assert.AreEqual(2, result)
 
 [<Test>]
 let Test2 () =
-    let arr = input.Split [| '\n' |]
+    let arr = input.Split('\n')
 
     let result = Day2.resolvePart2 arr
-    Assert.AreEqual(0, result)
+    Assert.AreEqual(4, result)
