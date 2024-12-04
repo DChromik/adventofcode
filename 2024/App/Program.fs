@@ -22,12 +22,20 @@ let main _args =
     //
     // printfn "%d" d1p2
 
-    let d3p1 = File.ReadLines "./day3.txt" |> Day3.resolvePart1
+    // let d3p1 = File.ReadLines "./day3.txt" |> Day3.resolvePart1
+    //
+    // printfn "%d" d3p1
+    //
+    // let d3p2 = File.ReadLines "./day3.txt" |> Day3.resolvePart2
+    //
+    // printfn "%d" d3p2
 
-    printfn "%d" d3p1
+    let d4p1 = File.ReadLines "./day4.txt" |> Day4.resolvePart1
 
-    let d3p2 = File.ReadLines "./day3.txt" |> Day3.resolvePart2
+    printfn "%d" d4p1
 
-    printfn "%d" d3p2
+    let d4p2 = File.ReadLines "./day4.txt" |> Day4.resolvePart2
+
+    printfn "%d" d4p2
 
     0
