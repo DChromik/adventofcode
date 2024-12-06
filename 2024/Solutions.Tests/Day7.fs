@@ -1,4 +1,4 @@
-module Day6
+module Day7
 
 open NUnit.Framework
 
