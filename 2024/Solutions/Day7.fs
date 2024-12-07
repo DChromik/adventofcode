@@ -34,4 +34,26 @@ let resolvePart1 (lines: seq<string>) : int64 =
         if hasCombination then targetValue else 0)
     |> Seq.sum
 
-let resolvePart2 (lines: seq<string>) : int = 0
+let pipe x y = int64 $"{x}{y}"
+
+let rec getPermutations2 (numbers: seq<int64>) (acc: int64) : seq<int64> =
+    seq {
+        match (Seq.tryHead numbers) with
+        | Some(x) ->
+            yield! getPermutations2 (Seq.tail numbers) (acc + x)
+            yield! getPermutations2 (Seq.tail numbers) (acc * x)
+            yield! getPermutations2 (Seq.tail numbers) (pipe acc x)
+        | None -> yield acc
+    }
+
+let resolvePart2 (lines: seq<string>) : int64 =
+    let parsedLines = parseLine lines
+
+    parsedLines
+    |> Seq.map (fun (targetValue, numbers) ->
+        let hasCombination =
+            getPermutations2 (Seq.tail numbers) (Seq.head numbers)
+            |> Seq.exists (fun res -> res = targetValue)
+
+        if hasCombination then targetValue else 0)
+    |> Seq.sum

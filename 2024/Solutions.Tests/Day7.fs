@@ -25,4 +25,4 @@ let Test2 () =
     let arr = input.Split('\n')
 
     let result = Day7.resolvePart2 arr
-    Assert.AreEqual(0, result)
+    Assert.AreEqual(11387, result)
