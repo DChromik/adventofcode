@@ -24,6 +24,9 @@ let distance (a: int * int) (b: int * int) = (fst a - fst b, snd a - snd b)
 
 let addPoints (a: int * int) (b: int * int) = (fst a + fst b, snd a + snd b)
 
+let isWithinBounds (width, height) (x, y) =
+    x >= 0 && x < width && y >= 0 && y < height
+
 let getAntinodes (a: int * int) (b: int * int) =
     seq {
         yield distance a b |> addPoints a
@@ -43,12 +46,45 @@ let rec findAllAntinodes (a: int * int) (arr: list<int * int>) =
 let resolvePart1 (lines: seq<string>) : int =
     let grid = parseToGrid lines
 
-    let antennae =
-        getAntennaeGroups grid.cells
-        |> Seq.map (fun (_, points) -> findAllAntinodes (List.head points) (List.tail points))
+    getAntennaeGroups grid.cells
+    |> Seq.map (fun (_, points) -> findAllAntinodes (List.head points) (List.tail points))
+    |> Seq.reduce Seq.append
+    |> Seq.filter (fun p -> isWithinBounds (grid.width, grid.height) p)
+    |> Seq.distinct
+    |> Seq.length
 
-    printfn "%A" antennae
+let rec getPointsWithinBounds (bounds: int * int) (direction: int * int) (point: int * int) =
+    seq {
+        if isWithinBounds bounds point then
+            yield point
+            yield! getPointsWithinBounds bounds direction (addPoints point direction)
+    }
 
-    0
+let getAntinodesWithinBounds (bounds: int * int) (a: int * int) (b: int * int) =
+    seq {
+        yield a
+        yield b
+        yield! getPointsWithinBounds bounds (distance a b) a
+        yield! getPointsWithinBounds bounds (distance b a) b
+    }
 
-let resolvePart2 (lines: seq<string>) : int = 0
+let rec findAllAntinodesWithResonance (bounds: int * int) (a: int * int) (arr: list<int * int>) =
+    seq {
+        match arr with
+        | [] -> ()
+        | b :: tail ->
+            yield! getAntinodesWithinBounds bounds a b
+            yield! findAllAntinodesWithResonance bounds a tail
+            yield! findAllAntinodesWithResonance bounds b tail
+    }
+
+let resolvePart2 (lines: seq<string>) : int =
+    let grid = parseToGrid lines
+
+    getAntennaeGroups grid.cells
+    |> Seq.map (fun (_, points) ->
+        findAllAntinodesWithResonance (grid.width, grid.height) (List.head points) (List.tail points))
+    |> Seq.reduce Seq.append
+    |> Seq.filter (fun p -> isWithinBounds (grid.width, grid.height) p)
+    |> Seq.distinct
+    |> Seq.length
