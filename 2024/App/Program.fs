@@ -13,7 +13,11 @@ let days =
        (Day8.resolvePart1 >> int64, Day8.resolvePart2 >> int64)
        (Day9.resolvePart1 >> int64, Day9.resolvePart2 >> int64)
        (Day10.resolvePart1 >> int64, Day10.resolvePart2 >> int64)
-       (Day11.resolvePart1 >> int64, Day11.resolvePart2 >> int64) |]
+       (Day11.resolvePart1 >> int64, Day11.resolvePart2 >> int64)
+       (Day12.resolvePart1 >> int64, Day12.resolvePart2 >> int64)
+       (Day13.resolvePart1 >> int64, Day13.resolvePart2 >> int64)
+       (Day14.resolvePart1 >> int64, Day14.resolvePart2 >> int64)
+       (Day15.resolvePart1 >> int64, Day15.resolvePart2 >> int64) |]
 
 [<EntryPoint>]
 let main args =

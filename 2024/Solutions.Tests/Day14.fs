@@ -3,45 +3,30 @@ module Day14
 open NUnit.Framework
 
 let input =
-    @"47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
+    @"p=0,4 v=3,-3
+p=6,3 v=-1,-3
+p=10,3 v=-1,2
+p=2,0 v=2,-1
+p=0,0 v=1,3
+p=3,0 v=-2,-2
+p=7,6 v=-1,-3
+p=3,0 v=-1,-2
+p=9,3 v=2,3
+p=7,3 v=-1,2
+p=2,4 v=2,-3
+p=9,5 v=-3,-3"
 
-75,47,61,53,29
-97,61,53,29,13
-75,29,13
-75,97,47,61,53
-61,13,29
-97,13,75,29,47"
 
 [<Test>]
 let Test1 () =
     let arr = input.Split('\n')
 
-    let result = Day5.resolvePart1 arr
-    Assert.AreEqual(143, result)
+    let result = Day13.testPart1 arr
+    Assert.AreEqual(12, result)
 
 [<Test>]
 let Test2 () =
     let arr = input.Split('\n')
 
-    let result = Day5.resolvePart2 arr
-    Assert.AreEqual(123, result)
+    let result = Day13.resolvePart2 arr
+    Assert.AreEqual(0, result)
