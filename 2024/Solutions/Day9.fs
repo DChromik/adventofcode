@@ -67,42 +67,42 @@ let resolvePart1 (lines: seq<string>) =
         | Empty -> 0L)
     |> Array.sum
 
-let stringToFiles (s: string) =
-    s.Trim().ToCharArray()
-    |> Array.indexed
-    |> Array.map (fun (i, c) -> indexToFile i (c.ToString() |> int64))
-
-let swap arr file space =
-    let swapped = arr |> Array.insertAt (fst file) (snd file)
-
-    swapped |> Array.set (fst space) (snd space)
-
-    swapped
-
-let defragmentByFile (storage: Space[]) =
-    storage
-    |> Array.indexed
-    |> Array.foldBack
-        (fun (fileIndex, file) defragmented ->
-            match file with
-            | EmptySpace _ -> defragmented
-            | File(id, fileSize) ->
-                let spaceIndex =
-                    defragmented
-                    |> Array.tryFind (fun (_, f) ->
-                        match f with
-                        | EmptySpace size -> fileSize <= size
-                        | File _ -> false)
-
-                match spaceIndex with
-                | None -> defragmented
-                | Some spaceIndex -> swap defragmented fileIndex spaceIndex)
-        storage
-
+// let stringToFiles (s: string) =
+//     s.Trim().ToCharArray()
+//     |> Array.indexed
+//     |> Array.map (fun (i, c) -> indexToFile i (c.ToString() |> int64))
+//
+// let swap arr file space =
+//     let swapped = arr |> Array.insertAt (fst file) (snd file)
+//
+//     swapped |> Array.set (fst space) (snd space)
+//
+//     swapped
+//
+// let defragmentByFile (storage: Space[]) =
+//     storage
+//     |> Array.indexed
+//     |> Array.foldBack
+//         (fun (fileIndex, file) defragmented ->
+//             match file with
+//             | EmptySpace _ -> defragmented
+//             | File(_, fileSize) ->
+//                 let spaceIndex =
+//                     defragmented
+//                     |> Array.tryFind (fun (_, f) ->
+//                         match f with
+//                         | EmptySpace size -> fileSize <= size
+//                         | File _ -> false)
+//
+//                 match spaceIndex with
+//                 | None -> defragmented
+//                 | Some spaceIndex -> swap defragmented fileIndex spaceIndex)
+//         storage
+//
 let resolvePart2 (lines: seq<string>) : int =
-    let files = lines |> Seq.head |> stringToFiles
-
-    let defragmented = defragmentByFile files
-    printfn "%A" files
+    // let files = lines |> Seq.head |> stringToFiles
+    //
+    // let defragmented = defragmentByFile files
+    // printfn "%A" files
 
     0
