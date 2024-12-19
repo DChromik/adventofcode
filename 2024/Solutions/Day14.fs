@@ -15,17 +15,17 @@ let parseInput (lines: seq<string>) =
         { position = (int m.Groups[1].Value, int m.Groups[2].Value)
           velocity = (int m.Groups[3].Value, int m.Groups[4].Value) })
 
-let moveRobot (width: int, height: int) (robot: Robot) =
+let moveRobot (times: int) (width: int, height: int) (robot: Robot) =
     let (x, y) = robot.position
     let (dx, dy) = robot.velocity
 
     let resX =
-        match (x + dx * 100) % width with
+        match (x + dx * times) % width with
         | res when res >= 0 -> res
         | res -> res + width
 
     let resY =
-        match (y + dy * 100) % height with
+        match (y + dy * times) % height with
         | res when res >= 0 -> res
         | res -> res + height
 
@@ -51,9 +51,18 @@ let countQuadrants (bounds: int * int) (positions: seq<int * int>) =
     |> Seq.reduce (fun a b -> a * b)
 
 let resolvePart1 (lines: seq<string>) : int =
-    parseInput lines |> Seq.map (moveRobot (101, 103)) |> countQuadrants (101, 103)
+    parseInput lines
+    |> Seq.map (moveRobot 100 (101, 103))
+    |> countQuadrants (101, 103)
 
 let testPart1 (lines: seq<string>) : int =
-    parseInput lines |> Seq.map (moveRobot (11, 7)) |> countQuadrants (11, 7)
+    parseInput lines |> Seq.map (moveRobot 100 (11, 7)) |> countQuadrants (11, 7)
 
-let resolvePart2 (lines: seq<string>) : int = 0
+let resolvePart2 (lines: seq<string>) : int =
+    let robots = parseInput lines
+
+    seq { 0..10000 }
+    |> Seq.map (fun i -> robots |> Seq.map (moveRobot i (101, 103)) |> countQuadrants (101, 103))
+    |> Seq.indexed
+    |> Seq.reduce (fun a b -> if snd a < snd b then a else b)
+    |> fst
