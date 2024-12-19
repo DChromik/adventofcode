@@ -6,20 +6,10 @@ type Block =
     | ID of int64
     | Empty
 
-type Space =
-    | File of int64 * int64
-    | EmptySpace of int64
-
 let stringToIntArray (s: string) =
     s.Trim().ToCharArray() |> Array.map (fun c -> c.ToString() |> int)
 
 let indexToBlock (i: int64) = if isEven i then ID(i / 2L) else Empty
-
-let indexToFile index size =
-    if isEven index then
-        File(index / 2L, size)
-    else
-        EmptySpace size
 
 let parseInput (lines: seq<string>) =
     lines
@@ -67,48 +57,58 @@ let resolvePart1 (lines: seq<string>) =
         | Empty -> 0L)
     |> Array.sum
 
-let stringToFiles (s: string) =
-    s.Trim().ToCharArray()
-    |> Array.indexed
-    |> Array.map (fun (i, c) -> indexToFile i (c.ToString() |> int64))
+let swapFile (storage: Block[]) (size: int) (fileIndex: int) (spaceIndex: int) =
+    for i = 0 to (size - 1) do
+        let tmp = storage[fileIndex + i]
 
-let swap (arr: Space[]) (file: int * Space) (space: int * Space) =
-    let swapped = arr |> Array.insertAt (fst space) (snd file)
+        storage[fileIndex + i] <- storage[spaceIndex + i]
+        storage[spaceIndex + i] <- tmp
 
-    match (snd file, snd space) with
-    | (File(_, fSize), EmptySpace size) -> Array.set swapped (fst file) (EmptySpace(size - fSize))
-    | __ -> ()
+let defragmentStorageByFile (storage: Block[]) =
+    let sizes = storage |> Array.groupBy id
 
-    Array.set swapped (fst file) (snd space)
+    for index = storage.Length - 1 downto 0 do
+        printfn "Files remaining: %A" index
 
-    swapped
+        let id = storage[index]
 
-let defragmentByFile (storage: Space[]) : Space[] =
-    let indexedStorage = storage |> Array.indexed
+        let size =
+            match id with
+            | ID id ->
+                sizes
+                |> Array.find (fun (block, count) ->
+                    match block with
+                    | ID bid when bid = id -> true
+                    | _ -> false)
+                |> snd
+                |> Array.length
+            | _ -> 0
 
-    Array.foldBack
-        (fun (fileIndex, file) defragmented ->
-            match file with
-            | EmptySpace _ -> defragmented
-            | File(_, fileSize) ->
-                let spaceIndex =
-                    defragmented
-                    |> Array.tryFindIndex (fun block ->
+        if size > 0 then
+            let spaceIndex =
+                storage
+                |> Array.take index
+                |> Array.windowed size
+                |> Array.tryFindIndex (fun window ->
+                    window
+                    |> Array.forall (fun block ->
                         match block with
-                        | EmptySpace size -> fileSize <= size
-                        | File _ -> false)
+                        | Empty -> true
+                        | _ -> false))
 
-                match spaceIndex with
-                | None -> defragmented
-                | Some spaceIndex -> swap defragmented (fileIndex, file) (spaceIndex, defragmented[spaceIndex]))
-        indexedStorage
-        storage
+            match spaceIndex with
+            | Some spaceI when spaceI < index -> swapFile storage size (index - size + 1) spaceI
+            | _ -> ()
 
-let resolvePart2 (lines: seq<string>) : int =
-    let files = lines |> Seq.head |> stringToFiles
+    storage
 
-    let defragmented = defragmentByFile files
-    printfn "%A" files
-    printfn "%A" defragmented
-
-    0
+let resolvePart2 (lines: seq<string>) =
+    lines
+    |> parseInput
+    |> defragmentStorageByFile
+    |> Array.indexed
+    |> Array.map (fun (index, c) ->
+        match c with
+        | ID(x) -> int64 index * x
+        | Empty -> 0L)
+    |> Array.sum
