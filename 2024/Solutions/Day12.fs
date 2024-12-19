@@ -4,9 +4,7 @@ type Position = int * int
 
 type Plot = char
 
-type Region =
-    { area: int
-      perimeter: int}
+type Region = { area: int; perimeter: int }
 
 type Grid = Map<Position, Plot>
 
@@ -14,7 +12,10 @@ type CollectRegionsState =
     { checkedPositions: Set<Position>
       regions: List<Region> }
 
-    static member Default = { checkedPositions = Set []; regions = [] }
+    static member Default =
+        { checkedPositions = Set []
+          regions = [] }
+
     static member getRegions(state: CollectRegionsState) = state.regions
 
 module Grid =
@@ -35,22 +36,29 @@ module Grid =
 
     let private checkRegion grid (position: Position) (plot: Plot) =
         let perimeters =
-            Seq.unfold (fun (checkedPositions: Set<Position>, positions: List<Position>) ->
-                match positions with
-                | head :: tail ->
-                    let updatedChecked = Set.add head checkedPositions
-                    let neighbours = findNeighbours grid head |> List.filter (fun (pl, pos) -> pl = plot && (Set.contains pos updatedChecked |> not)) |> List.map snd
-                    Some(4 - neighbours.Length, (Set.add head checkedPositions, List.append tail neighbours))
-                | _ -> None
-            ) (Set<Position>[], [position])
+            Seq.unfold
+                (fun (checkedPositions: Set<Position>, positions: List<Position>) ->
+                    match positions with
+                    | head :: tail ->
+                        let updatedChecked = Set.add head checkedPositions
 
-        { area = (Seq.length perimeters); perimeter = (Seq.sum perimeters)}
+                        let neighbours =
+                            findNeighbours grid head
+                            |> List.filter (fun (pl, pos) -> pl = plot && (Set.contains pos updatedChecked |> not))
+                            |> List.map snd
 
-    let private checkPlot grid (state: CollectRegionsState) position plot =
-        if Set.contains plot state.checkedPlots then
-            state
-        else
-            Seq.
+                        Some(4 - neighbours.Length, (Set.add head checkedPositions, List.append tail neighbours))
+                    | _ -> None)
+                (Set<Position> [], [ position ])
+
+        { area = (Seq.length perimeters)
+          perimeter = (Seq.sum perimeters) }
+
+    let private checkPlot grid (state: CollectRegionsState) position plot = state
+    // if Set.contains plot state.checkedPlots then
+    //     state
+    // else
+    //     state
 
     let collectRegions (grid: Grid) : list<Region> =
         grid
