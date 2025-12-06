@@ -4,10 +4,10 @@
 require 'bundler/setup'
 require 'aoc2025'
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
-#
-puts Day1.part1 'inputs/day1small.txt'
-puts Day1.part1 'inputs/day1.txt'
-puts Day1.part2 'inputs/day1small.txt'
-puts Day1.part2 'inputs/day1.txt'
+day = ARGV[0].to_i
+part = ARGV[1].to_i
+test_input = ARGV[2] == 'true'
+solution = Aoc2025.solve(day, part, test_input)
+
+puts "Day #{day}, part #{part}, test input #{test_input}"
+puts "Solution: #{solution}"
