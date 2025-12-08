@@ -1,38 +1,27 @@
+# frozen_string_literal: true
+
 # Day 2 solutions
 module Day2
   def self.part1(path)
-    result = 0
-    File.foreach(path) do |line|
-      parts = line.split(',')
-
-      parts.each do |part|
-        from, to = part.scan(/\d+|\d+/)
-
-        next if from.nil? || to.nil?
-
-        (from..to).each do |i|
-          result += i.to_i if i.match?(/^(\d+)\1$/)
-        end
-      end
+    File.foreach(path).sum do |line|
+      count_invalid_ids(line, /^(\d+)\1$/)
     end
-    result
   end
 
   def self.part2(path)
-    result = 0
-    File.foreach(path) do |line|
-      parts = line.split(',')
-
-      parts.each do |part|
-        from, to = part.scan(/\d+|\d+/)
-
-        next if from.nil? || to.nil?
-
-        (from..to).each do |i|
-          result += i.to_i if i.match?(/^(\d+)\1+$/)
-        end
-      end
+    File.foreach(path).sum do |line|
+      count_invalid_ids(line, /^(\d+)\1+$/)
     end
-    result
+  end
+
+  # Finds and counts all invalid ID values for line
+  def self.count_invalid_ids(line, invalid_id_pattern)
+    line.strip.split(',').sum do |part|
+      from, to = part.strip.split('-')
+
+      next 0 unless from && to
+
+      (from.to_i..to.to_i).select { |i| i.to_s.match?(invalid_id_pattern) }.sum
+    end
   end
 end
