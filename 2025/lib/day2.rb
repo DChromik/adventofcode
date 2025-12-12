@@ -16,8 +16,8 @@ module Day2
 
   # Finds and counts all invalid ID values for line
   def self.count_invalid_ids(line, invalid_id_pattern)
-    line.strip.split(',').sum do |id_range|
-      from, to = id_range.strip.split('-')
+    line.strip.split(",").sum do |id_range|
+      from, to = id_range.strip.split("-")
 
       next 0 unless from && to
 
