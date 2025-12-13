@@ -15,6 +15,7 @@ class TestAoc2025 < Minitest::Test
   end
 
   def test_day3
-    assert Aoc2025.solve(3, 1, true).zero?
+    assert_equal 357, Aoc2025.solve(3, 1, true)
+    assert_equal 3121910778619, Aoc2025.solve(3, 2, true)
   end
 end
