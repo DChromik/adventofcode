@@ -32,7 +32,7 @@ module Day1
   def self.get_rotation(line)
     direction, distance = line.scan(/[LR]+|\d+/)
 
-    direction == 'L' ? distance.to_i : -distance.to_i
+    (direction == "L") ? distance.to_i : -distance.to_i
   end
 
   def self.passed_zero?(position, next_position)
