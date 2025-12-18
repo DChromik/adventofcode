@@ -23,4 +23,9 @@ class TestAoc2025 < Minitest::Test
     assert_equal 13, Aoc2025.solve(4, 1, true)
     assert_equal 43, Aoc2025.solve(4, 2, true)
   end
+
+  def test_day5
+    assert_equal 3, Aoc2025.solve(5, 1, true)
+    assert_equal 14, Aoc2025.solve(5, 2, true)
+  end
 end
